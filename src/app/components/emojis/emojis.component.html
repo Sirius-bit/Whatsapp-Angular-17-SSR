@@ -1,0 +1,19 @@
+<section id="emojis" class="h-[200px] overflow-y-auto w-2/3 float-right p-4" *ngIf="emojiVisible">
+    <input type="text" class="p-[0.3rem] bg-yellow-200 outline-none border-none rounded-lg mb-[1rem]"
+        (keyup)="searchEmoji()" [(ngModel)]="searchString" placeholder="Cerca..">
+    <div class="flex flex-wrap">
+        @for (category of emoji.emojiCategories; track $index) {
+        <span (click)="getEmojiByCategories(category)" class="mr-[10px] categories mb-6 cursor-pointer">
+            {{category.slug}}
+        </span>
+        }
+    </div>
+    <div class="h-full grid grid-cols-12 gap-7">
+        @for (emoji of emoji.emojiCollection; track $index) {
+        <span class="cursor-pointer" (click)="addEmojiOnInput(emoji)">{{emoji.character}}</span>
+        }
+        @empty {
+        <span id="emojiIsNotPresent">Non ci sono emoji qui..</span>
+        }
+    </div>
+</section>

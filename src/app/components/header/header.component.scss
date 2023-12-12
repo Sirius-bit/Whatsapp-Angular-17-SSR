@@ -1,0 +1,33 @@
+.font-GeneralSans-Medium {
+    font-family: "GeneralSans-Medium", sans-serif;
+}
+
+.font-GeneralSans-Semibold {
+    font-family: "GeneralSans-Semibold", sans-serif;
+}
+
+#media {
+    position: absolute;
+    z-index: 30;
+    left: 88%;
+    bottom: 70%;
+    background-color: white;
+    padding: 6px;
+    border-radius: 20px;
+}
+
+.wrapper-icon {
+    border-radius: 50%;
+    width: 50px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+}
+
+.wrapper-icon:hover {
+    background-color: burlywood;
+
+}

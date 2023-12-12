@@ -1,0 +1,86 @@
+<app-header [chatUser]="chatUser" [imgUser]="imgUser" [nameUser]="nameUser" [startChat]="startChat"
+    [informationUserChat]="informationUserChat" (userSelected)="mostraChat()" (imageToSend)="gifToSend($event,sendImg)"
+    (delete)="updateBooleanStatus($event)"></app-header>
+<div class="flex relative font-GeneralSans-Medium">
+    <section class="w-1/3 bg-slate-200 h-fit max-h-[360px] overflow-y-auto transition-all duration-[2s]">
+        <div class="w-full h-full">
+            @for (user of users.users; track user.id) {
+            <div class="w-full h-auto p-10 flex items-center hover:bg-slate-400 transition-all duration-200 cursor-pointer"
+                (click)="mostraChat(user)">
+                <div class="w-[6%] aspect-[1/1] rounded-full border-2">
+                    <img [src]="user.img" alt="Not Found" [title]="user.name">
+                </div>
+                <div class="flex ml-[10%] w-[42.9%] max-w-[42.9%]">
+                    <div class="flex flex-col w-fit">
+                        <span>{{user.name}}</span>
+                        <span>{{user.stato}}</span>
+                    </div>
+                </div>
+                @if (deleteChatIcon) {
+                <i class="fa-solid fa-trash self-end ml-[35%] relative z-10" (click)="deleteChatTrash(user)"></i>
+                }
+            </div>
+            }
+            @empty {
+            <p class="noUser">Aggiungi un utente!</p>
+            }
+        </div>
+    </section>
+    @if (users.modalVisible) {
+    <div class="backdrop"></div>
+    <app-form class="absolute top-[25%] left-[40%] border-2 border-black font-GeneralSans-Medium" id="form"></app-form>
+    }
+    <section class="w-2/3 bg-teal-200 max-h-[335px] flex flex-col relative font-GeneralSans-Medium overflow-y-auto"
+        id="chat">
+        <div class="" id="container-chat">
+            @if (startChat) {
+            <p class="text-center mt-7">Ciao, inizia la conversazione cliccando su un utente!</p>
+            }
+            @for (msg of chatUser; track $index) {
+            <div [ngClass]="{
+                    'text-center mt-7': true,
+                    'text-end': $index % 2 !== 0,
+                    'text-start': $index % 2 === 0 && $index > 0
+                  }">
+                @if (verifyMsg(msg) && $index > 0) {
+                <img [src]="selectedImagePath" alt="Image" [ngClass]="{
+                            'p-2 text-white w-[150px] aspect-[1/1]': true,
+                            'ml-auto mr-[7%]': $index % 2 !== 0,
+                            'mr-auto ml-[7%]': $index % 2 === 0 && $index > 0
+                          }" />
+                @if ($index > 0) {
+                <span>{{ dateNow }}</span>
+                }
+                } @else {
+                <span [ngClass]="{
+                        'p-2 bg-green-800 text-white rounded-xl': $index > 0,
+                        'mr-[7%]': $index % 2 !== 0,
+                        'ml-[7%]': $index % 2 === 0 && $index > 0
+                      }" (click)="optionMsg()">{{ msg }}
+                    @if ($index > 0) {
+                    <span>{{ dateNow }}</span>
+                    }
+                </span>
+                }
+            </div>
+            }
+        </div>
+        @if (!startChat) {
+        <form class="absolute bottom-0 p-2 bg-slate-300 w-full flex justify-center items-center"
+            (ngSubmit)="inizioChat()">
+            <input type="text" placeholder="Messaggio.."
+                class="rounded-md bg-yellow-100 w-[80%] p-2 outline-none border-none msg">
+            <i class="fa-regular fa-face-smile ml-[10%]" (click)="getEmojis()"></i>
+            <i class="fa-solid fa-paper-plane mr-[4%] ml-[7%]" (click)="inizioChat()"></i>
+        </form>
+        }
+    </section>
+</div>
+@defer () {
+@if (emojiVisible) {
+<app-emojis [emojiVisible]="emojiVisible" class="font-GeneralSans-Medium"></app-emojis>
+}
+}
+@error {
+<span>Il caricamento delle emojis non è andato a buon fine</span>
+}

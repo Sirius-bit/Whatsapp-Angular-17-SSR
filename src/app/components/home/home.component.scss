@@ -1,0 +1,56 @@
+.chat {
+    border-right: 1px solid lightgrey;
+}
+
+#chat {
+    min-height: 335px;
+}
+
+
+#container-chat {
+    min-height: 282px;
+    max-height: 282px;
+    overflow-y: auto;
+}
+
+.noUser {
+    height: 335px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 2s ease-in-out;
+}
+
+.backdrop {
+    position: fixed;
+    z-index: 30;
+    background-color: black;
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+app-form {
+    z-index: 50;
+}
+
+i {
+    cursor: pointer;
+}
+
+app-form.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: all 300ms ease-in-out;
+}
+
+.font-GeneralSans-Medium {
+    font-family: "GeneralSans-Medium", sans-serif;
+}
+
+.font-GeneralSans-Semibold {
+    font-family: "GeneralSans-Semibold", sans-serif;
+}

@@ -1,0 +1,17 @@
+<div class="bg-red-500 font-GeneralSans-Medium">
+    <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()" class="flex flex-col gap-5 h-auto p-3">
+        <span class="flex justify-between items-center font-GeneralSans-Semibold">Aggiungi un contatto<i
+                class="fa-solid fa-x text-end cursor-pointer p-2 self-end" (click)="closeForm()"></i></span>
+        <label for="name">Nome e Cognome</label>
+        <input type="text" formControlName="name" id="name" class="p-3" placeholder="Nome" />
+        <label for="stato">Stato</label>
+        <input type="text" formControlName="stato" id="stato" class="p-3" placeholder="Inserisci il tuo stato" />
+        <label for="img"
+            class="py-[4px] px-[7px] bg-white rounded-lg w-fit self-center cursor-pointer hover:button-hover">Seleziona
+            una
+            foto</label>
+        <input type="file" accept=".jpg,.svg,.png,.jpeg" formControlName="img" id="img" class="p-3"
+            style="display: none;" />
+        <button type="submit" class="bg-cyan-500 p-3">Submit</button>
+    </form>
+</div>
