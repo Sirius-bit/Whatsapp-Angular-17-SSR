@@ -1,4 +1,4 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { HeaderComponent } from '../header/header.component';
@@ -7,7 +7,7 @@ import { User } from '../../interfaces/interfaces';
 import { EmojisComponent } from "../emojis/emojis.component";
 import { FormComponent } from '../form/form.component';
 import { FormsModule } from '@angular/forms';
-import { min } from 'rxjs';
+import { link } from 'node:fs';
 
 @Component({
   selector: 'app-home',
@@ -17,13 +17,12 @@ import { min } from 'rxjs';
   imports: [CommonModule, HeaderComponent, EmojisComponent, FormComponent, FormsModule]
 })
 export class HomeComponent {
-  userSelected: any
-  imageToSend: any
-
-  constructor() { }
 
   protected users = inject(UserService)
   protected emoji = inject(EmojiApiService)
+
+  userSelected: any
+  imageToSend: any
 
   protected emojiVisible = false
   protected messaggio = ""
@@ -36,8 +35,21 @@ export class HomeComponent {
   protected startChat = true
   protected dateNow: undefined | string
   protected sendImg = false
-  protected selectedImagePath: string | null = null;
+  protected selectedImagePath: string | null = null
 
+  @ViewChild('containerChat', { static: false }) containerChat!: ElementRef
+
+  ngAfterViewChecked() {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom() {
+    try {
+      this.containerChat.nativeElement.scrollTop = this.containerChat.nativeElement.scrollHeight
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   @HostListener('click', ['$event'])
   onClick(event: any) {
@@ -53,14 +65,13 @@ export class HomeComponent {
       const msgInput: HTMLInputElement | null = document.querySelector(".msg")
       if (msgInput) {
         const messaggio = msgInput.value
-        if (messaggio && messaggio.length > 0) {
+        if (messaggio && messaggio.length >= 0) {
           const oraAttuale = new Date()
           const ora = oraAttuale.getHours()
           const minuti = oraAttuale.getMinutes().toString().padStart(2, '0')
           this.dateNow = `${ora}:${minuti}`
-          this.chatUser.push(messaggio)
-          console.log(this.dateNow)
-
+          this.chatUser.push({ type: "msg", str: messaggio })
+          const scrollChat = document.getElementById('container-chat')
 
           const giorno = oraAttuale.getDate()
           const mese = new Intl.DateTimeFormat('it-IT', { month: 'long' }).format(oraAttuale)
@@ -91,11 +102,6 @@ export class HomeComponent {
     }
   }
 
-
-  optionMsg = () => {
-    this.optionMessage = !this.optionMessage
-  }
-
   updateBooleanStatus = (status: boolean) => {
     this.deleteChatIcon = status
   }
@@ -120,9 +126,11 @@ export class HomeComponent {
 
   gifToSend = (linkImg: string, sendImg: boolean) => {
     this.selectedImagePath = linkImg
-    this.chatUser.push([this.selectedImagePath])
-    this.sendImg = sendImg
+    this.chatUser.push({ type: "img", strImg: this.selectedImagePath })
+    console.log(this.chatUser.indexOf())
+
+    this.sendImg = !sendImg
   }
 
-  verifyMsg = (msg: string | string[]) => Array.isArray(msg)
+  verifyMsg = (msgType: string) => msgType === "img"
 }

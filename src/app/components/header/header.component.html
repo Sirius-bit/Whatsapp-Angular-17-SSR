@@ -22,14 +22,12 @@
             }
             <span [ngClass]="{'bg-slate-300 rounded-xl p-2' : !startChat}">{{!startChat ? nameUser : ""}}</span>
             <div class="w-[60px]">
-                <i class="fa-solid fa-paperclip relative" (click)="sendImg = !sendImg">
+                <i class="fa-solid fa-paperclip cursor-pointer" id="btnImg" (click)="sendImg = !sendImg">
                 </i>
-                @if(sendImg) {
-                <div id="media">
-                    <label for="file">GIF/Immagine</label>
-                    <input type="file" id="file" style="display: none" (change)="img($event,sendImg)">
+                <div class="media cursor-pointer" [ngClass]="{'visible': sendImg, 'no-visible': !sendImg}">
+                    <label for="file" class="cursor-pointer">GIF/Immagine</label>
+                    <input type="file" id="file" style="display: none" (change)="img($event, sendImg)">
                 </div>
-                }
             </div>
             }
         </div>

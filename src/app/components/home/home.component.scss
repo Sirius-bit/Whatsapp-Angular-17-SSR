@@ -3,14 +3,27 @@
 }
 
 #chat {
-    min-height: 335px;
+    min-height: 336px;
 }
 
+.classForImg {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 150px;
+    height: 150px;
+    min-height: 150px;
+}
 
 #container-chat {
     min-height: 282px;
     max-height: 282px;
     overflow-y: auto;
+}
+
+.fa-trash:hover {
+    transition: all 200ms ease-in-out;
+    scale: 1.4;
 }
 
 .noUser {

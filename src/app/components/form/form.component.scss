@@ -3,6 +3,29 @@ input {
     border: none;
 }
 
+.container {
+    position: relative;
+}
+
+.info-text {
+    width: max-content;
+    position: absolute;
+    top: 70%;
+    left: 100%;
+    opacity: 0;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: opacity 300ms ease-in-out;
+    margin-left: 1rem;
+}
+
+label[for="img"]:hover+.info-text {
+    opacity: 1;
+}
+
+
 button {
     width: fit-content;
     margin: 0 auto;

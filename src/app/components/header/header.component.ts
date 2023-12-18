@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { environment } from '../../environments/envirionments';
@@ -24,6 +24,21 @@ export class HeaderComponent {
   selectedImagePath: null | string | undefined
 
   @Input() userSelected: EventEmitter<any> = new EventEmitter<any>()
+
+  @Output() sendImgButton: EventEmitter<any> = new EventEmitter();
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: any) {
+    const buttonForSendImg = document.querySelector('.media');
+    const btnForImg = document.getElementById('btnImg');
+
+    if (this.sendImg && btnForImg && !btnForImg.contains(event.target) &&
+      buttonForSendImg && !buttonForSendImg.contains(event.target)) {
+      this.sendImg = false;
+    }
+    this.sendImgButton.emit(this.sendImg);
+  }
+
 
   @Output() imageToSend: EventEmitter<any> = new EventEmitter<any>()
   img = (event: Event, sendImg: boolean) => {

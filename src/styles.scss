@@ -150,24 +150,3 @@ body {
 body {
     margin: 0;
 }
-
-@font-face {
-    font-family: 'GeneralSans-Medium';
-    src: url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Medium.woff2') format('woff2'),
-        url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Medium.woff') format('woff'),
-        url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-display: swap;
-    font-style: normal;
-}
-
-
-@font-face {
-    font-family: 'GeneralSans-Semibold';
-    src: url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Semibold.woff2') format('woff2'),
-        url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Semibold.woff') format('woff'),
-        url('./assets/General-Sans/Fonts/WEB/fonts/GeneralSans-Semibold.ttf') format('truetype');
-    font-weight: 600;
-    font-display: swap;
-    font-style: normal;
-}

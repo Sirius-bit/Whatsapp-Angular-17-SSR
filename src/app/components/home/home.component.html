@@ -11,13 +11,13 @@
                     <img [src]="user.img" alt="Not Found" [title]="user.name">
                 </div>
                 <div class="flex ml-[10%] w-[42.9%] max-w-[42.9%]">
-                    <div class="flex flex-col w-fit">
-                        <span>{{user.name}}</span>
-                        <span>{{user.stato}}</span>
+                    <div class="flex flex-col">
+                        <p>{{user.name}}</p>
+                        <p>{{user.stato}}</p>
                     </div>
                 </div>
                 @if (deleteChatIcon) {
-                <i class="fa-solid fa-trash self-end ml-[35%] relative z-10" (click)="deleteChatTrash(user)"></i>
+                <i class="fa-solid fa-trash self-end ml-[35%] px-2 relative z-10" (click)="deleteChatTrash(user)"></i>
                 }
             </div>
             }
@@ -32,31 +32,29 @@
     }
     <section class="w-2/3 bg-teal-200 max-h-[335px] flex flex-col relative font-GeneralSans-Medium overflow-y-auto"
         id="chat">
-        <div class="" id="container-chat">
+        <div class="" id="container-chat" #containerChat>
             @if (startChat) {
             <p class="text-center mt-7">Ciao, inizia la conversazione cliccando su un utente!</p>
             }
+            <span class="text-center mt-7 mb-7 block">{{chatUser[0]}}</span>
             @for (msg of chatUser; track $index) {
             <div [ngClass]="{
-                    'text-center mt-7': true,
+                    'text-center mt-7 mb-7': true,
                     'text-end': $index % 2 !== 0,
                     'text-start': $index % 2 === 0 && $index > 0
                   }">
-                @if (verifyMsg(msg) && $index > 0) {
-                <img [src]="selectedImagePath" alt="Image" [ngClass]="{
+                @if (verifyMsg(msg.type)) {
+                <img [src]="msg.strImg" alt="Image" [ngClass]="{
                             'p-2 text-white w-[150px] aspect-[1/1]': true,
                             'ml-auto mr-[7%]': $index % 2 !== 0,
                             'mr-auto ml-[7%]': $index % 2 === 0 && $index > 0
                           }" />
-                @if ($index > 0) {
-                <span>{{ dateNow }}</span>
-                }
                 } @else {
                 <span [ngClass]="{
                         'p-2 bg-green-800 text-white rounded-xl': $index > 0,
                         'mr-[7%]': $index % 2 !== 0,
                         'ml-[7%]': $index % 2 === 0 && $index > 0
-                      }" (click)="optionMsg()">{{ msg }}
+                      }">{{ msg.str }}
                     @if ($index > 0) {
                     <span>{{ dateNow }}</span>
                     }
